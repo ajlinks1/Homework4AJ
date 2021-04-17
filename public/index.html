@@ -2,61 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv = "X-UA-Compatible" content="IE=edge">
     <meta  name = "viewport" content="width=device-width, initial-scale=1">
     <title>AutoComplete with Socket IO and Node JS</title>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
+<p><h1>Simple Autocomplete Application using Socket IO</h1></p>
+<p><h3>Instructions:</h3></p>
+<p><h4>Please type in the search box a name you would either like to look up or enter into the database.</h4></p>
+<p><h4>Press the submit button if what you searched isn't in the database to enter the name into the
+database in order to have more entries.</h4></p>
 <form name="form">
     <input type="text" name="inp" autoComplete = "off" placeholder="search" id="search-field">
-    <button id = "submit">Submit</button>
+    <button id = "submit" onclick="onSubmitQuery(event)">Submit</button>
 </form>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>match</th>
-        <th>id</th>
-    </tr>
-    </thead>
-    <tbody id="search-results">
-    </tbody>
-</table>
+<ul id="search-results">
+</ul>
+
 <script src = "/socket.io/socket.io.js"></script>
-    <script> var socket = io.connect();
-    search_field = document.getElementById('search-field');
-    var data = {};
-    var list = '';
-    var err_msg = 'Sorry, no content matched your criteria, try again!'
-
-    // do the function with every keystroke
-    search_field.onkeyup = function() {
-        data.query = this.value;
-        if (this.value == null || this.value == '' || this.value == ' '){
-            document.getElementById('search-results').innerHTML = '';
-        }else{
-            socket.emit('submit', data);
-            list = '';
-            list_q = '';
-            count = 1;
-        }
-    };
-
-    socket.on('result', function(result) {
-        if (result.length <= 0){
-            document.getElementById('search-results').innerHTML = '<h4>'+ err_msg + '</h4>';
-        }else{
-            for (var i = 0; i < result.length; i++) {
-                count = 1;
-                count = count + i;
-                list += '<tr><th scope="row">'+ count+'</th><td>'+result[i].namemain+'</td>'+'<td>'+result[i].id+'</td></tr>';
-                document.getElementById('search-results').innerHTML = list;
-            };
-        };
-    });
-
-    </script>
+<script src = "index.js"></script>
 </body>
 
 </html>

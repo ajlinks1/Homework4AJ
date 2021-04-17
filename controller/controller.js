@@ -1,15 +1,7 @@
 const Model = require('../models/users.js');
 
 exports.getStart = async (data) => {
-  Model.find(data).select('-_id-__v');
-  const queryResult = await Model.aggregate([])
-    .search({
-      autocomplete: {
-        path: 'name',
-        query: data,
-      },
-    })
-    .limit(5);
-  return queryResult;
+  const result = await Model.find({ Name: { $regex: data } });
+  return result;
 };
-exports.postUsers = async (query) => new Model(query).save();
+exports.postUsers = async (data) => new Model(data).save();
