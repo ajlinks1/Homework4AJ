@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content="IE=edge">
+    <meta  name = "viewport" content="width=device-width, initial-scale=1">
+    <title>AutoComplete with Socket IO and Node JS</title>
+</head>
+<body>
+<form name="form">
+    <input type="text" name="inp" autoComplete = "off" placeholder="search" id="search-field">
+    <button id = "submit">Submit</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>match</th>
+        <th>id</th>
+    </tr>
+    </thead>
+    <tbody id="search-results">
+    </tbody>
+</table>
+<script src = "/socket.io/socket.io.js"></script>
+    <script> var socket = io.connect();
+    search_field = document.getElementById('search-field');
+    var data = {};
+    var list = '';
+    var err_msg = 'Sorry, no content matched your criteria, try again!'
+
+    // do the function with every keystroke
+    search_field.onkeyup = function() {
+        data.query = this.value;
+        if (this.value == null || this.value == '' || this.value == ' '){
+            document.getElementById('search-results').innerHTML = '';
+        }else{
+            socket.emit('submit', data);
+            list = '';
+            list_q = '';
+            count = 1;
+        }
+    };
+
+    socket.on('result', function(result) {
+        if (result.length <= 0){
+            document.getElementById('search-results').innerHTML = '<h4>'+ err_msg + '</h4>';
+        }else{
+            for (var i = 0; i < result.length; i++) {
+                count = 1;
+                count = count + i;
+                list += '<tr><th scope="row">'+ count+'</th><td>'+result[i].namemain+'</td>'+'<td>'+result[i].id+'</td></tr>';
+                document.getElementById('search-results').innerHTML = list;
+            };
+        };
+    });
+
+    </script>
+</body>
+
+</html>
