@@ -10,8 +10,12 @@ search_field.onkeyup = function () {
   if (this.value == null || this.value == '' || this.value == ' ') {
     document.getElementById('search-results').innerHTML = '';
   } else {
-    // socket.emit('submit', data);
     socket.emit('search-field', data);
+    if (this.value === 'comic sans') {
+      changeFontFamily('Comic Sans MS');
+    } else {
+      changeFontFamily('Source Sans Pro');
+    }
   }
 };
 
@@ -23,7 +27,6 @@ socket.on('search-results', (result) => {
     list = '';
     for (let i = 0; i < result.length; i++) {
       const data = result[i].nam;
-      // list += '<tr><th scope="row">'+ (i + 1)+'</th><td>'+htmlEncode(data.Name)+'</td>'+'<td>'+data._id+'</td></tr>';
       list += `<li>${htmlEncode(data.Name)}</li>`;
     }
 
@@ -52,4 +55,8 @@ function onSubmitQuery(event) {
 
 function htmlEncode(str) {
   return String(str).replace(/[^\w. ]/gi, (c) => `&#${c.charCodeAt(0)};`);
+}
+function changeFontFamily(font) {
+  const fontTest = document.getElementById('text');
+  fontTest.style.fontFamily = font;
 }

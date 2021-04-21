@@ -51,6 +51,18 @@
 ul{
   color: #20c997;
 }
+.column{
+  float:left;
+  max-width: 50%;
+  text-overflow: clip;
+  flex: content;
+}
+.row:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -83,20 +95,20 @@ hr {
   overflow: visible;
 }
 form{
-  margin-left:0.5rem;
+  margin-top: 2rem;
 }
 input{
   align-items: center;
-  width:60%;
 }
-button{
-  width:20%
-}
+
 h1{
   color: #fd7e14;
 }
 h3{
   color: #268bd2;
+}
+h4{
+  color: #aebdc1;
 }
 h2{
   font-size: 12px;
@@ -105,13 +117,19 @@ h2{
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  margin-left: 0.5rem;
 }
 
 p {
   margin-top: 0;
   margin-bottom: 1rem;
-  margin-left: 0.5rem;
+
+}
+div{
+  padding: 1px 1px 5px 10px;
+  margin-left: 1px;
+  margin-top: 1px;
+  margin-right: 5px;
+
 }
 
 abbr[title],
